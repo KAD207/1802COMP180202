@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-doListApp</title>
+
+    <!-- link to CSS -->
+    <link rel="stylesheet" href="tdl.css"/> 
+</head>
+<body>
+    
+    <!-- main app container -->
+    <main class="app" id="app">
+        <h1>To-do List ✓</h1>
+
+        <!-- Input form to add new tasks -->
+        <form id="task-form">
+            
+            <input id="task-input" type="text" placeholder="Thêm việc làm mới: "/>
+            <input id="task-date" type="date"/> <!-- Task date -->
+            <select id="task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit">Thêm</button>
+            
+        </form>
+        
+        <!-- Filter and clear controls -->
+        <section class="controls">
+            <div class="filters">
+
+                <!-- Filter buttons to show All / Active / Completed tasks -->
+                <button class="filter-active" data-filter="all">Tất cả</button>
+                <button class="filter" data-filter="active">Đang có</button>
+                <button class="filter" data-filter="completed">Hoàn thành</button>
+            </div>
+
+            <!-- Button to clear all completed tasks -->
+            <button id="Clear-completed">Xóa đã hoàn thành</button>
+        </section>
+        
+        <!-- Unordered list to hold all task items -->
+        <ul id="task-list" class="task-list"></ul>
+
+        <!-- Footer with task count -->
+        <div class="footer">
+            <div id="count">0 việc còn lại</div>
+            <div class="small">*Chỉ lưu trên local - không có tài khoản</div>
+        </div>
+    </main>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
