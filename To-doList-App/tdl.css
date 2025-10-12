@@ -25,6 +25,12 @@ body.dark .app {
 background: #374151;
 }
 
+#darkmode {
+    display: flex;
+    align-items: top right;
+    justify-content: top right;
+}
+
 h1{
     font-size: 50px;
     justify-content: inherit;
