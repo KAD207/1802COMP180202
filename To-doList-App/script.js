@@ -3,18 +3,18 @@ const taskForm = document.getElementById('task-form');
 const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById('task-list');
 const filters = document.querySelectorAll('.filter');
-const clearCompletedBtn = document.getElementById('clear-completed');
+const clearCompletedBtn = document.getElementById('Clear-completed');
 const countEl = document.getElementById('count');
 
 let tasks = [];
 let currentFilter = 'all';
 
-function uid(){return Date.now().toString(36) + Math.random().toString(36).slice(2,9);}
-function save(){localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));}
-function load(){tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');}
+function uid(){return Date.now().toString(36) + Math.random().toString(36).slice(2,9)};
+function save(){localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))};
+function load(){tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')};
 function updateCount(){
     const left = tasks.filter(t => !t.completed).length;
-    countEl.textContent = `${left} task${left !== 1 ? 's' : ''} left`;
+    countEl.textContent = `${left} việc còn lại`;
 }
 
 function render(){
@@ -22,14 +22,20 @@ function render(){
     if(currentFilter === 'all') return true;
     if(currentFilter === 'active') return !t.completed;
     return t.completed;
-    });
+    })
+    function formatDate(dateStr) {
+        if (!dateStr) {return '';}
+        const [year, month, day] = dateStr.split('-');
+        return `${day}-${month}-${year}`;
+    }
+
     taskList.innerHTML = filtered.map(t => `
-    <li class="task ${t.completed ? 'completed' : ''}" data-id="${t.id}">
+    <li class="task ${t.completed ? 'đã hoàn thành' : ''}" data-id="${t.id}">
     <label>
         <input class="toggle" type="checkbox" ${t.completed ? 'checked' : ''}/>
         <span class="task-text">${t.text}</span>
     </label>
-    ${t.date ? `<span class="date">📅 ${t.date}</span>` : ''}
+    ${t.date ? `<span class="date">📅 ${formatDate(t.date)}</span>` : ''}
     <div class="task-actions">
         <button class="edit">✎</button>
         <button class="delete">🗑</button>
@@ -46,16 +52,17 @@ function addTask(text, date, priority){
 }
 
 taskForm.addEventListener('submit', e => {
-    e.preventDefault();
+    e.preventDefault()
     const text = taskInput.value.trim();
     const date = document.getElementById('task-date').value;
     if (text) {
-        addTask(text, date);
-        taskInput.value = '';
-        document.getElementById('task-date').value = '';
+        addTask(text, date)
+        taskInput.value = ''
+        document.getElementById('task-date').value = ''
     }
 });
 
+// Define task functions
 function toggleTask(id){ const t = tasks.find(x => x.id===id); t.completed=!t.completed; save(); render(); }
 function deleteTask(id){ tasks = tasks.filter(x => x.id!==id); save(); render(); }
 function updateTaskText(id, newText){ const t = tasks.find(x=>x.id===id); t.text=newText; save(); render(); }
@@ -70,16 +77,18 @@ const span = li.querySelector('.task-text');
 const input = document.createElement('input');
 input.type='text'; input.value=task.text; input.className='edit-input';
 span.replaceWith(input); input.focus();
-input.addEventListener('blur',()=>{ updateTaskText(id,input.value.trim()); });
-input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ input.blur(); } });
+input.addEventListener('blur',()=>{updateTaskText(id,input.value.trim()); });
+input.addEventListener('keydown',e=>{ if(e.key==='Enter'){input.blur(); } });
 }
 
+// Submit task 
 taskForm.addEventListener('submit',e=>{
     e.preventDefault();
     const val=taskInput.value.trim();
     if(val){ addTask(val); taskInput.value=''; }
 });
 
+// Task list actions
 taskList.addEventListener('click',e=>{
     const li=e.target.closest('.task'); if(!li)return; const id=li.dataset.id;
     if(e.target.matches('.toggle')) toggleTask(id);
@@ -87,14 +96,72 @@ taskList.addEventListener('click',e=>{
     if(e.target.matches('.edit')) startEdit(li);
 });
 
+// Filter buttons
 filters.forEach(btn=>btn.addEventListener('click',()=>setFilter(btn.dataset.filter)));
-clearCompletedBtn.addEventListener('click',()=>clearCompleted());
+clearCompletedBtn.addEventListener('click', clearCompleted);
 
-const themeBtn = document.getElementById('toggle-theme');
-themeBtn.addEventListener('click', ()=>{
-    document.body.classList.toggle('dark');
-    themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+// Dark Mode Toggle
+const toggle = document.getElementById('toggleDark');
+const body = document.getElementById('body');
+
+// On click toggle dark mode
+toggle.addEventListener('click', () => {
+    body.classList.toggle('darkmode');
+    // Dark mode
+    if (body.classList.contains('darkmode')) {
+        toggle.classList.remove('bi-brightness-high-fill');
+        toggle.classList.add('bi-moon');
+        body.style.background = 'black';
+        body.style.color = 'white';
+        localStorage.setItem('theme', 'dark');
+    } 
+    // Light mode
+    else {
+        toggle.classList.remove('bi-moon');
+        toggle.classList.add('bi-brightness-high-fill');
+        body.style.background = 'linear-gradient(180deg, #F1EFCB 0%, #CAE9F5 80%)';
+        body.style.color = 'black';
+        localStorage.setItem('theme', 'light');
+    }
+});
+
+// Load theme preference
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('darkmode');
+        toggle.classList.remove('bi-brightness-high-fill');
+        toggle.classList.add('bi-moon');
+        body.style.background = 'black';
+        body.style.color = 'white';
+        document.body.style.animationDuration = "2s";
+    } else {
+        body.classList.remove('darkmode');
+        toggle.classList.remove('bi-moon');
+        toggle.classList.add('bi-brightness-high-fill');
+        body.style.background = 'linear-gradient(180deg, #F1EFCB 0%, #CAE9F5 80%)';
+        body.style.color = 'black';
+        document.body.style.animationDuration = "2s";
+        document.body.style.animationName = "gradientShift";
+    }
 });
 
 
-document.addEventListener('DOMContentLoaded',()=>{ load(); render(); });
+// Save theme preference
+toggle.addEventListener('click', () => {
+    if (body.classList.contains('darkmode')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('darkmode');
+        body.style.background = 'black';
+        body.style.color = 'white';
+    }
+});
+load(); render();
