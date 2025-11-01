@@ -1,0 +1,131 @@
+:root{
+    --bg: #f7fafc;
+    --card: #ffffff;
+    --accent: #2563eb;
+    --danger: #ef4444;
+    --muted: #6b7280;
+}
+
+body{
+    background: turquoise;
+    background-image: linear-gradient(180deg, #F1EFCB 0%, #CAE9F5 80%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body.dark {
+background: #1f2937;
+color: #f3f4f6;
+}
+
+body.dark .app {
+background: #374151;
+}
+
+#darkmode {
+    display: flex;
+    align-items: top right;
+    justify-content: top right;
+}
+
+h1{
+    font-size: 50px;
+    justify-content: inherit;
+    align-items: inherit;
+}
+
+.task.low { border-left: 4px solid #10b981; }
+.task.medium { border-left: 4px solid #f59e0b; }
+.task.high { border-left: 4px solid #ef4444; }
+
+.app{
+    width: 100%;
+    max-width: 600px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 1);
+}
+
+#task-form{
+    display: flex;
+    gap: 8px;
+}
+
+#task-input{
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+}
+
+#task-form-button{
+    background: var(--accent);
+    color: white;
+    padding: 10px 16px;
+    margin: 10px;
+}
+
+.filters{
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 25px;
+    border-radius: 20px;
+    font-size: 25px;
+}
+
+.filters-button{
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 6px 10px;
+}
+
+.filters-button.active{
+    background: rgba(37, 99, 235, 0.1);
+    border-color: rgba(37, 99, 235, 0.2);
+    color: hsl(0, 10%, 25%)
+}
+
+#clear-completed{
+    color: var(--danger);
+    background: transparent;
+}
+.task-list{
+    list-style: none;
+    padding: 0px;
+    margin-top: 12px;
+}
+
+.task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.task-completed .task-text{
+    text-decoration: line-through;
+    opacity: 0.6;    
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
