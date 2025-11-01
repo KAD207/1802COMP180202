@@ -51,33 +51,6 @@ i{
     font-size: 25px;
 }
 
-#themeswitch{
-    height: 50px;
-    width: 50px;
-    padding: 0px;
-    border-radius: 50%;
-    background-color: var(--black);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 20px;
-    right: 25px;
-}
-
-#themeswitch img{
-    fill: var(--primary-color);
-}
-#themeswitch img:last-child{
-    display: none;
-}
-.darkmode #themeswitch img:first-child{
-    display: none;
-}
-.darkmode #themeswitch img:first-child{
-    display: block;
-}
-
 h1{
     font-size: 50px;
     display: flex;

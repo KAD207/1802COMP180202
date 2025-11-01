@@ -100,62 +100,6 @@ taskList.addEventListener('click',e=>{
 filters.forEach(btn=>btn.addEventListener('click',()=>setFilter(btn.dataset.filter)));
 clearCompletedBtn.addEventListener('click', clearCompleted);
 
-// Dark Mode Toggle
-const toggle = document.getElementById('toggleDark');
-const body = document.getElementById('body');
-
-// On click toggle dark mode
-toggle.addEventListener('click', () => {
-    body.classList.toggle('darkmode');
-    // Dark mode
-    if (body.classList.contains('darkmode')) {
-        toggle.classList.remove('bi-brightness-high-fill');
-        toggle.classList.add('bi-moon');
-        body.style.background = 'black';
-        body.style.color = 'white';
-        localStorage.setItem('theme', 'dark');
-    } 
-    // Light mode
-    else {
-        toggle.classList.remove('bi-moon');
-        toggle.classList.add('bi-brightness-high-fill');
-        body.style.background = 'linear-gradient(180deg, #F1EFCB 0%, #CAE9F5 80%)';
-        body.style.color = 'black';
-        localStorage.setItem('theme', 'light');
-    }
-});
-
-// Load theme preference
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('darkmode');
-        toggle.classList.remove('bi-brightness-high-fill');
-        toggle.classList.add('bi-moon');
-        body.style.background = 'black';
-        body.style.color = 'white';
-        document.body.style.animationDuration = "2s";
-    } else {
-        body.classList.remove('darkmode');
-        toggle.classList.remove('bi-moon');
-        toggle.classList.add('bi-brightness-high-fill');
-        body.style.background = 'linear-gradient(180deg, #F1EFCB 0%, #CAE9F5 80%)';
-        body.style.color = 'black';
-        document.body.style.animationDuration = "2s";
-        document.body.style.animationName = "gradientShift";
-    }
-});
-
-
-// Save theme preference
-toggle.addEventListener('click', () => {
-    if (body.classList.contains('darkmode')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
