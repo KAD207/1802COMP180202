@@ -18,11 +18,11 @@ function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
 }
 
-// Save + Load
+// Save + Load (Chuyển Object/Array -> JSON String)
 function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
-
+// (JSON String -> Object)
 function load() {
     tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 }
